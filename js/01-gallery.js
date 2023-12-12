@@ -2,6 +2,25 @@ import { galleryItems } from "./gallery-items.js";
 
 const ul = document.querySelector(".gallery");
 
+const openModal = function (event) {
+  event.preventDefault();
+  const target = event.target;
+  if (!target.classList.contains("gallery__image")) {
+    return;
+  }
+
+  const modalInstance = basicLightbox.create(`
+    <img src="${target.dataset.source}" alt="${target.alt}">
+  `);
+
+  modalInstance.show();
+  document.addEventListener("keydown", function (event) {
+    if (event.code === "Escape") {
+      modalInstance.close();
+    }
+  });
+};
+
 galleryItems.forEach(({ preview, original, description }) => {
   const li = document.createElement("li");
 
